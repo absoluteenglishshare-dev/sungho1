@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>ABSOLUTE 영어 | 성호고1 1학기 1차</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0c0c0f;
+  --surface: #13131a;
+  --card: #1a1a24;
+  --border: #2a2a3d;
+  --accent: #6366f1;
+  --accent2: #8b5cf6;
+  --gold: #f59e0b;
+  --green: #10b981;
+  --red: #ef4444;
+  --text: #f0f0f8;
+  --muted: #6b7280;
+  --tag: #1e1e35;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+body { background: var(--bg); color: var(--text); font-family: 'Noto Sans KR', sans-serif; min-height: 100vh; overflow-x: hidden; }
+
+/* HEADER */
+.header {
+  background: linear-gradient(135deg, #0a0a14 0%, #16082a 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 20px 10px;
+  position: sticky; top: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.brand { font-family: 'Bebas Neue', sans-serif; font-size: 20px; letter-spacing: 3px; background: linear-gradient(90deg, #818cf8, #c084fc, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.brand-sub { font-size: 10px; color: var(--muted); letter-spacing: 1px; margin-top: 1px; }
+.school-tag { background: var(--tag); border: 1px solid #3a3a5a; border-radius: 8px; padding: 4px 10px; font-size: 10px; color: #a5b4fc; font-family: 'Space Mono', monospace; }
+
+/* SCREENS */
+.screen { display: none; padding: 20px 16px; max-width: 600px; margin: 0 auto; }
+.screen.active { display: block; animation: fadeUp 0.3s ease; }
+@keyframes fadeUp { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:translateY(0); } }
+
+/* HOME */
+.home-hero { text-align: center; padding: 28px 0 20px; }
+.home-title { font-size: 26px; font-weight: 900; line-height: 1.25; margin-bottom: 8px; }
+.home-title em { color: #818cf8; font-style: normal; }
+.home-desc { color: var(--muted); font-size: 12px; line-height: 1.7; }
+
+.stat-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin: 20px 0; }
+.stat-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 14px 8px; text-align: center; }
+.stat-n { font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: #818cf8; line-height: 1; }
+.stat-l { font-size: 10px; color: var(--muted); margin-top: 3px; }
+
+.sec-title { font-size: 11px; font-weight: 700; letter-spacing: 2px; color: var(--muted); text-transform: uppercase; margin-bottom: 10px; }
+
+.mode-grid { display: grid; gap: 10px; margin-bottom: 20px; }
+.mode-card {
+  background: var(--card); border: 2px solid var(--border); border-radius: 16px;
+  padding: 18px 16px; cursor: pointer; transition: all 0.2s;
+  display: flex; align-items: center; gap: 14px;
+}
+.mode-card:active { transform: scale(0.98); }
+.mode-card:hover { border-color: var(--accent); }
+.mode-icon { width: 46px; height: 46px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+.mode-icon.a { background: linear-gradient(135deg,#6366f1,#8b5cf6); }
+.mode-icon.b { background: linear-gradient(135deg,#0891b2,#0d9488); }
+.mode-icon.c { background: linear-gradient(135deg,#d97706,#dc2626); }
+.mode-info { flex: 1; }
+.mode-name { font-weight: 700; font-size: 14px; margin-bottom: 3px; }
+.mode-desc { font-size: 11px; color: var(--muted); }
+.mode-arrow { color: var(--muted); font-size: 16px; }
+
+.count-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
+.cnt-btn { background: var(--card); border: 2px solid var(--border); border-radius: 10px; color: var(--text); padding: 9px 16px; font-size: 13px; font-family: 'Noto Sans KR',sans-serif; cursor: pointer; transition: all 0.2s; }
+.cnt-btn.sel { border-color: var(--accent); background: #1a1a38; color: #818cf8; font-weight: 700; }
+
+/* QUIZ HEADER */
+.qz-header { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+.back-btn { width: 36px; height: 36px; border-radius: 10px; background: var(--card); border: 1px solid var(--border); color: var(--text); font-size: 16px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.qz-prog-wrap { flex: 1; }
+.qz-prog-label { font-size: 11px; color: var(--muted); margin-bottom: 5px; display: flex; justify-content: space-between; }
+.prog-bar { height: 5px; background: var(--border); border-radius: 99px; overflow: hidden; }
+.prog-fill { height: 100%; background: linear-gradient(90deg,var(--accent),var(--accent2)); border-radius: 99px; transition: width 0.4s ease; }
+
+.badge-row { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+.badge { display: inline-flex; align-items: center; gap: 5px; background: var(--tag); border: 1px solid var(--border); border-radius: 99px; padding: 4px 10px; font-size: 10px; color: var(--muted); }
+.badge.num { color: #818cf8; border-color: #3a3a6a; font-family: 'Space Mono',monospace; }
+
+/* QUESTION CARD */
+.q-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: 20px;
+  padding: 26px 20px; margin-bottom: 18px; text-align: center;
+  position: relative; overflow: hidden; min-height: 110px;
+  display: flex; align-items: center; justify-content: center;
+}
+.q-card::before { content:''; position:absolute; top:0;left:0;right:0; height:3px; background:linear-gradient(90deg,var(--accent),var(--accent2),var(--gold)); }
+.q-text { font-size: 22px; font-weight: 700; line-height: 1.4; word-break: break-word; }
+.q-sub { font-size: 11px; color: var(--muted); margin-top: 8px; }
+.src-tag { display: inline-block; margin-top: 10px; background: #1e1e38; border: 1px solid #3a3a6a; border-radius: 6px; padding: 2px 8px; font-size: 10px; color: #818cf8; font-family: 'Space Mono',monospace; }
+
+/* CHOICES */
+.choices { display: grid; gap: 9px; }
+.choice {
+  background: var(--card); border: 2px solid var(--border); border-radius: 13px;
+  color: var(--text); padding: 14px 16px; font-size: 14px;
+  font-family: 'Noto Sans KR',sans-serif; text-align: left; cursor: pointer;
+  transition: all 0.15s; display: flex; align-items: center; gap: 11px;
+  word-break: break-word; line-height: 1.5;
+}
+.choice:active:not(:disabled) { transform: scale(0.98); }
+.ch-num { width: 26px; height: 26px; border-radius: 7px; background: var(--border); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; flex-shrink: 0; font-family: 'Space Mono',monospace; }
+.choice.correct { border-color: var(--green); background: #052e16; }
+.choice.correct .ch-num { background: var(--green); color: white; }
+.choice.wrong { border-color: var(--red); background: #1f0a0a; opacity: 0.7; }
+.choice.wrong .ch-num { background: var(--red); color: white; }
+.choice:disabled { cursor: default; }
+
+/* FEEDBACK */
+.feedback { border-radius: 13px; padding: 13px 16px; margin-top: 12px; font-size: 13px; font-weight: 700; display: none; align-items: center; gap: 10px; }
+.feedback.show { display: flex; }
+.feedback.ok { background: #052e16; border: 1px solid var(--green); color: var(--green); }
+.feedback.ng { background: #1f0a0a; border: 1px solid var(--red); color: var(--red); }
+.fb-ans { font-size: 11px; color: var(--muted); font-weight: 400; margin-top: 2px; }
+
+.next-btn { width: 100%; padding: 15px; border-radius: 13px; background: linear-gradient(135deg,var(--accent),var(--accent2)); border: none; color: white; font-size: 15px; font-weight: 700; font-family: 'Noto Sans KR',sans-serif; cursor: pointer; margin-top: 12px; display: none; }
+.next-btn.show { display: block; }
+.next-btn:active { opacity: 0.9; }
+
+/* ── 문장 배열 퀴즈 ── */
+.sent-card {
+  background: var(--card); border: 1px solid var(--border); border-radius: 20px;
+  padding: 22px 18px; margin-bottom: 16px; position: relative; overflow: hidden;
+}
+.sent-card::before { content:''; position:absolute; top:0;left:0;right:0; height:3px; background:linear-gradient(90deg,#d97706,#dc2626,#8b5cf6); }
+.sent-label { font-size: 10px; color: var(--muted); margin-bottom: 8px; font-family: 'Space Mono',monospace; }
+.sent-hint { font-size: 12px; color: #a5b4fc; margin-bottom: 14px; line-height: 1.6; }
+.sent-hint strong { color: var(--gold); }
+
+.answer-zone {
+  min-height: 52px; background: #0f0f18; border: 2px dashed var(--border);
+  border-radius: 12px; padding: 10px 12px; margin-bottom: 14px;
+  display: flex; flex-wrap: wrap; gap: 7px; align-items: center;
+}
+.answer-zone.has-words { border-color: var(--accent); }
+
+.word-pool { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+
+.word-chip {
+  background: var(--tag); border: 1.5px solid var(--border); border-radius: 8px;
+  padding: 8px 12px; font-size: 13px; font-family: 'Space Mono',monospace;
+  cursor: pointer; transition: all 0.15s; color: var(--text);
+  user-select: none;
+}
+.word-chip:active { transform: scale(0.95); }
+.word-chip.in-answer { background: #1a1a38; border-color: var(--accent); color: #a5b4fc; }
+.word-chip.used { opacity: 0.3; cursor: default; pointer-events: none; }
+
+.sent-btns { display: flex; gap: 8px; }
+.check-btn { flex: 1; padding: 14px; border-radius: 12px; background: linear-gradient(135deg,var(--accent),var(--accent2)); border: none; color: white; font-size: 14px; font-weight: 700; font-family: 'Noto Sans KR',sans-serif; cursor: pointer; }
+.reset-btn { padding: 14px 16px; border-radius: 12px; background: var(--card); border: 2px solid var(--border); color: var(--muted); font-size: 13px; font-family: 'Noto Sans KR',sans-serif; cursor: pointer; }
+
+.sent-feedback { border-radius: 12px; padding: 12px 14px; margin-top: 12px; font-size: 13px; display: none; }
+.sent-feedback.show { display: block; }
+.sent-feedback.ok { background: #052e16; border: 1px solid var(--green); color: var(--green); }
+.sent-feedback.ng { background: #1f0a0a; border: 1px solid var(--red); color: var(--red); }
+.correct-sent { font-size: 12px; color: var(--muted); margin-top: 6px; line-height: 1.6; }
+
+/* RESULT */
+.result-hero { text-align: center; padding: 28px 0 24px; }
+.score-ring { width: 120px; height: 120px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; background: conic-gradient(var(--accent) 0%, var(--accent2) var(--pct,0%), var(--border) var(--pct,0%)); }
+.score-inner { width: 92px; height: 92px; border-radius: 50%; background: var(--bg); display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.score-pct { font-family: 'Bebas Neue',sans-serif; font-size: 30px; color: #818cf8; line-height: 1; }
+.score-sub-l { font-size: 9px; color: var(--muted); }
+.result-title { font-size: 20px; font-weight: 900; margin-bottom: 5px; }
+.result-sub { color: var(--muted); font-size: 12px; }
+
+.res-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 8px; margin: 20px 0; }
+.res-stat { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 12px 8px; text-align: center; }
+.res-n { font-family: 'Bebas Neue',sans-serif; font-size: 26px; line-height: 1; }
+.res-n.g { color: var(--green); } .res-n.r { color: var(--red); } .res-n.gold { color: var(--gold); }
+.res-l { font-size: 10px; color: var(--muted); margin-top: 3px; }
+
+.wrong-title { font-size: 13px; font-weight: 700; color: var(--red); margin-bottom: 10px; }
+.wrong-item { background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--red); border-radius: 11px; padding: 12px 14px; margin-bottom: 8px; }
+.wrong-word { font-weight: 700; font-size: 14px; }
+.wrong-detail { font-size: 11px; color: var(--muted); margin-top: 3px; }
+
+.res-btns { display: grid; gap: 8px; margin-top: 20px; }
+.res-btn { width: 100%; padding: 15px; border-radius: 13px; font-size: 14px; font-weight: 700; font-family: 'Noto Sans KR',sans-serif; cursor: pointer; transition: all 0.2s; border: none; }
+.res-btn:active { transform: scale(0.98); }
+.res-btn.primary { background: linear-gradient(135deg,var(--accent),var(--accent2)); color: white; }
+.res-btn.ghost { background: var(--card); border: 2px solid var(--border); color: var(--text); }
+
+.footer { text-align: center; padding: 18px; font-size: 10px; color: var(--muted); border-top: 1px solid var(--border); margin-top: 32px; letter-spacing: 0.5px; }
+
+/* 핵심 구/절 하이라이트 */
+.hl { color: #fb923c; font-weight: 700; }
+
+/* 문장 컨텍스트 표시 */
+.sent-context {
+  font-size: 13px; line-height: 1.8; margin-bottom: 14px;
+  background: #0f0f18; border-radius: 10px; padding: 12px 14px;
+  border: 1px solid var(--border);
+}
+.ctx-given { color: var(--muted); }
+.ctx-blank {
+  display: inline-block;
+  background: #2a1a00; border: 1.5px dashed #fb923c;
+  border-radius: 6px; padding: 1px 10px; color: #fb923c;
+  font-weight: 700; font-size: 12px; margin: 0 2px;
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <div class="brand">ABSOLUTE 영어</div>
+    <div class="brand-sub">성호고 1학년 · 1학기 1차</div>
+  </div>
+  <div class="school-tag">26년 3월 모의</div>
+</div>
+
+<!-- ① 홈 -->
+<div class="screen active" id="screen-home">
+  <div class="home-hero">
+    <div class="home-title">내신 퀴즈<br><em>완전 정복</em></div>
+    <div class="home-desc">21, 24, 30, 31, 32, 35, 37, 41~42번<br>단어 80개 · 핵심문장 17개</div>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-card"><div class="stat-n">80</div><div class="stat-l">전체 단어</div></div>
+    <div class="stat-card"><div class="stat-n">8</div><div class="stat-l">지문 수</div></div>
+    <div class="stat-card"><div class="stat-n">17</div><div class="stat-l">핵심문장</div></div>
+  </div>
+
+  <div class="sec-title">학습 모드 선택</div>
+  <div class="mode-grid">
+    <div class="mode-card" onclick="startMode('eng2kor')">
+      <div class="mode-icon a">🔤</div>
+      <div class="mode-info">
+        <div class="mode-name">영어 → 한글</div>
+        <div class="mode-desc">영단어를 보고 한글 뜻 맞추기</div>
+      </div>
+      <div class="mode-arrow">›</div>
+    </div>
+    <div class="mode-card" onclick="startMode('kor2eng')">
+      <div class="mode-icon b">📖</div>
+      <div class="mode-info">
+        <div class="mode-name">한글 → 영어</div>
+        <div class="mode-desc">한글 뜻을 보고 영단어 맞추기</div>
+      </div>
+      <div class="mode-arrow">›</div>
+    </div>
+    <div class="mode-card" onclick="startMode('sentence')">
+      <div class="mode-icon c">✏️</div>
+      <div class="mode-info">
+        <div class="mode-name">서술형 문장 배열</div>
+        <div class="mode-desc">단어 카드를 올바른 순서로 배치하기</div>
+      </div>
+      <div class="mode-arrow">›</div>
+    </div>
+  </div>
+
+  <div class="sec-title">단어 퀴즈 문제 수</div>
+  <div class="count-row">
+    <button class="cnt-btn" onclick="selCount(this,10)">10문제</button>
+    <button class="cnt-btn sel" onclick="selCount(this,20)">20문제</button>
+    <button class="cnt-btn" onclick="selCount(this,0)">전체</button>
+  </div>
+
+  <div class="footer">ABSOLUTE 영어 · 결과로 증명하는 압도적 실력</div>
+</div>
+
+<!-- ② 단어 퀴즈 -->
+<div class="screen" id="screen-word">
+  <div class="qz-header">
+    <button class="back-btn" onclick="goHome()">←</button>
+    <div class="qz-prog-wrap">
+      <div class="qz-prog-label">
+        <span id="w-label">1 / 20</span>
+        <span id="w-score">맞춤: 0</span>
+      </div>
+      <div class="prog-bar"><div class="prog-fill" id="w-prog" style="width:0%"></div></div>
+    </div>
+  </div>
+
+  <div class="badge-row">
+    <span class="badge" id="w-mode-badge">🔤 영어→한글</span>
+    <span class="badge num" id="w-src-badge">21번</span>
+  </div>
+
+  <div class="q-card">
+    <div>
+      <div class="q-text" id="w-question">—</div>
+      <div class="q-sub" id="w-hint"></div>
+    </div>
+  </div>
+
+  <div class="choices" id="w-choices"></div>
+
+  <div class="feedback" id="w-feedback">
+    <span id="w-fb-emoji">✅</span>
+    <div><div id="w-fb-text">정답!</div><div class="fb-ans" id="w-fb-ans"></div></div>
+  </div>
+  <button class="next-btn" id="w-next" onclick="wordNext()">다음 →</button>
+
+  <div class="footer">ABSOLUTE 영어 · 결과로 증명하는 압도적 실력</div>
+</div>
+
+<!-- ③ 문장 배열 퀴즈 -->
+<div class="screen" id="screen-sent">
+  <div class="qz-header">
+    <button class="back-btn" onclick="goHome()">←</button>
+    <div class="qz-prog-wrap">
+      <div class="qz-prog-label">
+        <span id="s-label">1 / 17</span>
+        <span id="s-score">맞춤: 0</span>
+      </div>
+      <div class="prog-bar"><div class="prog-fill" id="s-prog" style="width:0%"></div></div>
+    </div>
+  </div>
+
+  <div class="badge-row">
+    <span class="badge">✏️ 문장 배열</span>
+    <span class="badge num" id="s-src-badge">21번</span>
+  </div>
+
+  <div class="sent-card">
+    <div class="sent-label" id="s-gram-label">📌 문법 포인트</div>
+    <div class="sent-hint" id="s-hint">한글 해석을 참고하세요</div>
+
+    <div class="sent-context" id="s-context"></div>
+
+    <div style="font-size:11px;color:var(--muted);margin-bottom:8px;">🟠 주황색 부분을 영작하세요</div>
+    <div class="answer-zone" id="answer-zone"></div>
+
+    <div style="font-size:11px;color:var(--muted);margin-bottom:8px;margin-top:14px;">단어 카드</div>
+    <div class="word-pool" id="word-pool"></div>
+
+    <div class="sent-btns">
+      <button class="reset-btn" onclick="resetAnswer()">↺ 초기화</button>
+      <button class="check-btn" onclick="checkSentence()">정답 확인 ✓</button>
+    </div>
+
+    <div class="sent-feedback" id="s-feedback">
+      <div id="s-fb-text"></div>
+      <div class="correct-sent" id="s-correct"></div>
+    </div>
+  </div>
+
+  <button class="next-btn" id="s-next" onclick="sentNext()">다음 문장 →</button>
+
+  <div class="footer">ABSOLUTE 영어 · 결과로 증명하는 압도적 실력</div>
+</div>
+
+<!-- ④ 결과 -->
+<div class="screen" id="screen-result">
+  <div class="result-hero">
+    <div class="score-ring" id="score-ring">
+      <div class="score-inner">
+        <div class="score-pct" id="r-pct">0%</div>
+        <div class="score-sub-l">정답률</div>
+      </div>
+    </div>
+    <div class="result-title" id="r-title">완료!</div>
+    <div class="result-sub" id="r-sub"></div>
+  </div>
+
+  <div class="res-stats">
+    <div class="res-stat"><div class="res-n g" id="r-correct">0</div><div class="res-l">정답</div></div>
+    <div class="res-stat"><div class="res-n r" id="r-wrong">0</div><div class="res-l">오답</div></div>
+    <div class="res-stat"><div class="res-n gold" id="r-total">0</div><div class="res-l">전체</div></div>
+  </div>
+
+  <div id="r-wrong-section">
+    <div class="wrong-title">❌ 오답 노트</div>
+    <div id="r-wrong-list"></div>
+  </div>
+
+  <div class="res-btns">
+    <button class="res-btn primary" onclick="goHome()">🏠 홈으로</button>
+    <button class="res-btn ghost" onclick="retryWrong()">❌ 오답 재시험</button>
+  </div>
+  <div class="footer">ABSOLUTE 영어 · 결과로 증명하는 압도적 실력</div>
+</div>
+
+<script>
+// ════════════════════════════════
+// 데이터
+// ════════════════════════════════
+const WORDS = [
+  // 21번
+  {w:'unprecedented',m:'전례 없는',src:'21번'},
+  {w:'embodied',m:'구체화된, 육체를 가진',src:'21번'},
+  {w:'networked',m:'네트워크화된',src:'21번'},
+  {w:'far-reaching',m:'광범위한',src:'21번'},
+  {w:'responsibility',m:'책임',src:'21번'},
+  {w:'ancestor',m:'조상',src:'21번'},
+  {w:'stewardship',m:'관리',src:'21번'},
+  {w:'descendant',m:'후손',src:'21번'},
+  {w:'generation',m:'세대',src:'21번'},
+  {w:'consider',m:'고려하다',src:'21번'},
+  // 24번
+  {w:'habit',m:'습관',src:'24번'},
+  {w:'essential',m:'필수적인',src:'24번'},
+  {w:'temptation',m:'유혹',src:'24번'},
+  {w:'bundling',m:'묶기, 결합',src:'24번'},
+  {w:'participant',m:'참가자',src:'24번'},
+  {w:'access',m:'접근',src:'24번'},
+  {w:'tempting',m:'유혹적인',src:'24번'},
+  {w:'combine',m:'결합하다',src:'24번'},
+  {w:'hostage',m:'볼모',src:'24번'},
+  {w:'opted',m:'선택했다',src:'24번'},
+  // 30번
+  {w:'principal',m:'주요한',src:'30번'},
+  {w:'transportation',m:'교통수단',src:'30번'},
+  {w:'constraint',m:'제약',src:'30번'},
+  {w:'extensive',m:'광범위한',src:'30번'},
+  {w:'expend',m:'소비하다',src:'30번'},
+  {w:'unavoidable',m:'피할 수 없는',src:'30번'},
+  {w:'burden',m:'부담',src:'30번'},
+  {w:'productive',m:'생산적인',src:'30번'},
+  {w:'simulate',m:'모방하다, 흉내 내다',src:'30번'},
+  {w:'accomplished',m:'달성된',src:'30번'},
+  // 31번
+  {w:'anxiety',m:'불안감',src:'31번'},
+  {w:'overwhelmed',m:'압도된',src:'31번'},
+  {w:'inspire',m:'영감을 주다',src:'31번'},
+  {w:'imaginative',m:'상상력이 풍부한',src:'31번'},
+  {w:'indecision',m:'우유부단, 망설임',src:'31번'},
+  {w:'streamline',m:'간소화하다',src:'31번'},
+  {w:'express',m:'표현하다',src:'31번'},
+  {w:'possession',m:'소유',src:'31번'},
+  {w:'packed',m:'가득 찬',src:'31번'},
+  {w:'choice',m:'선택',src:'31번'},
+  // 32번
+  {w:'familiarity',m:'친숙함',src:'32번'},
+  {w:'mastery',m:'숙달',src:'32번'},
+  {w:'illusion',m:'착각',src:'32번'},
+  {w:'competence',m:'능력',src:'32번'},
+  {w:'cognitive',m:'인지의',src:'32번'},
+  {w:'passive',m:'수동적인',src:'32번'},
+  {w:'overestimate',m:'과대평가하다',src:'32번'},
+  {w:'counters',m:'대응하다',src:'32번'},
+  {w:'recall',m:'회상하다',src:'32번'},
+  {w:'reliable',m:'신뢰할 수 있는',src:'32번'},
+  // 35번
+  {w:'stable',m:'안정적인',src:'35번'},
+  {w:'quantity',m:'수량',src:'35번'},
+  {w:'trigger',m:'유발하다, 방아쇠',src:'35번'},
+  {w:'affect',m:'영향을 미치다',src:'35번'},
+  {w:'release',m:'분비하다, 방출하다',src:'35번'},
+  {w:'hormone',m:'호르몬',src:'35번'},
+  {w:'desire',m:'욕구',src:'35번'},
+  {w:'dieting',m:'다이어트 중인',src:'35번'},
+  {w:'battle',m:'싸우다',src:'35번'},
+  {w:'childhood',m:'어린 시절',src:'35번'},
+  // 37번
+  {w:'sustainably',m:'지속 가능하게',src:'37번'},
+  {w:'rooted',m:'뿌리 내린',src:'37번'},
+  {w:'adoption',m:'채택',src:'37번'},
+  {w:'symbolize',m:'상징하다',src:'37번'},
+  {w:'convenience',m:'편리함',src:'37번'},
+  {w:'prosperity',m:'번영',src:'37번'},
+  {w:'counter',m:'대응하다',src:'37번'},
+  {w:'pollution',m:'오염',src:'37번'},
+  {w:'corporation',m:'기업',src:'37번'},
+  {w:'recycling',m:'재활용',src:'37번'},
+  // 41~42번
+  {w:'patience',m:'인내심',src:'41~42번'},
+  {w:'unattractive',m:'매력 없는',src:'41~42번'},
+  {w:'passive',m:'수동적인',src:'41~42번'},
+  {w:'virtue',m:'미덕',src:'41~42번'},
+  {w:'promotion',m:'승진',src:'41~42번'},
+  {w:'accommodate',m:'순응시키다',src:'41~42번'},
+  {w:'accelerate',m:'가속화하다',src:'41~42번'},
+  {w:'capacity',m:'능력',src:'41~42번'},
+  {w:'fulfillment',m:'성취, 만족',src:'41~42번'},
+  {w:'purchase',m:'유리한 입장, 영향력',src:'41~42번'},
+];
+
+const SENTENCES = [
+  // 21번
+  {
+    src:'21번', gram:'관계대명사 that / to부정사',
+    hint:'오늘 우리의 결정은 우리에게 <span class="hl">좋은 조상이 되라는 책임을 지우는 광범위한 영향</span>을 미친다.',
+    prefix:'Our decisions today have', target:'far-reaching impacts that place a responsibility on us to become good ancestors', suffix:'.',
+    sentence:'Our decisions today have far-reaching impacts that place a responsibility on us to become good ancestors.'
+  },
+  {
+    src:'21번', gram:'관계대명사 whose',
+    hint:'우리는 <span class="hl">삶이 우리가 현재 만들고 있는 세계에서 살아가게 될 수십억 명의 행복</span>을 상상해야 한다.',
+    prefix:'We must imagine', target:'the well-being of billions of people whose lives will be lived in the world we are currently making', suffix:'.',
+    sentence:'We must imagine the well-being of billions of people whose lives will be lived in the world we are currently making.'
+  },
+  // 24번
+  {
+    src:'24번', gram:'동명사 주어 / 간접의문문',
+    hint:'<span class="hl">뇌가 습관을 어떻게 사용하는지, 그리고 어떻게 행동할 수 있는지 이해하는 것</span>은 비즈니스에 필수적이다.',
+    prefix:'', target:'Understanding how the brain uses habits and how you can work with them', suffix:' is essential for business.',
+    sentence:'Understanding how the brain uses habits and how you can work with them is essential for business.'
+  },
+  {
+    src:'24번', gram:'관계대명사 whose / 비교급',
+    hint:'<span class="hl">기기가 볼모로 잡힌</span> 참가자들은 체육관을 방문할 가능성이 51퍼센트 더 높았다.',
+    prefix:'The participants', target:'whose devices were held hostage', suffix:' were 51 percent more likely to visit the gym.',
+    sentence:'The participants whose devices were held hostage were 51 percent more likely to visit the gym.'
+  },
+  // 30번
+  {
+    src:'30번', gram:'관계대명사 that / 분사',
+    hint:'그러한 조건 하에서의 걷기는 <span class="hl">생산적인 능력을 소모하는</span> 피할 수 없는 부담이다.',
+    prefix:'Walking under those conditions is an unavoidable burden', target:'that consumes productive capability', suffix:'.',
+    sentence:'Walking under those conditions is an unavoidable burden that consumes productive capability.'
+  },
+  {
+    src:'30번', gram:'because of + 명사구',
+    hint:'개발 도상국에서의 주요 교통수단은 <span class="hl">광범위한 운송 체계를 운영하는 데 필요한 자원에 대한 제약 때문에</span> 여전히 걷기이다.',
+    prefix:'The principal transportation mode in the developing world, even in large cities, is still walking', target:'because of constraints on the resources needed to operate extensive transit systems', suffix:'.',
+    sentence:'The principal transportation mode in the developing world, even in large cities, is still walking because of constraints on the resources needed to operate extensive transit systems.'
+  },
+  // 31번
+  {
+    src:'31번', gram:'간접의문문 how / 분사',
+    hint:'이것은 <span class="hl">옷으로 가득 찬 옷장을 들여다보고 입을 것이 없다고 생각하는 방식</span>을 우리에게 상기시킨다.',
+    prefix:'This reminds us of', target:'how women look in their closets packed full of clothes and think I have nothing to wear', suffix:'.',
+    sentence:'This reminds us of how women look in their closets packed full of clothes and think I have nothing to wear.'
+  },
+  {
+    src:'31번', gram:'want + 목적어 + to부정사',
+    hint:'여러분은 아이들이 <span class="hl">영감을 받고 상상력이 풍부하게 느끼기를</span> 바란다.',
+    prefix:'You want', target:'your kids to feel inspired and imaginative in the room', suffix:' — not overcome with indecision.',
+    sentence:'You want your kids to feel inspired and imaginative in the room not overcome with indecision.'
+  },
+  // 32번
+  {
+    src:'32번', gram:'분사구문 (결과)',
+    hint:'학생들은 흔히 친숙함을 진정한 숙달로 착각하여, <span class="hl">위험한 능력의 착각을 만들어 낸다</span>.',
+    prefix:'Students often mistake familiarity with true mastery,', target:'creating a dangerous illusion of competence', suffix:'.',
+    sentence:'Students often mistake familiarity with true mastery creating a dangerous illusion of competence.'
+  },
+  {
+    src:'32번', gram:'by + 동명사',
+    hint:'자료를 가르치는 것은 <span class="hl">심층 처리, 능동적 회상, 구조적 조직화를 요구하고 지식의 빈틈을 드러냄으로써</span> 이 착각에 대응한다.',
+    prefix:'Teaching materials actively counters this illusion', target:'by requiring deep processing active recall structured organization and revealing gaps in knowledge', suffix:'.',
+    sentence:'Teaching materials actively counters this illusion by requiring deep processing active recall structured organization and revealing gaps in knowledge.'
+  },
+  // 35번
+  {
+    src:'35번', gram:'that절 보어 / by the time',
+    hint:'설정점 이론 개념은 <span class="hl">여러분의 신체가 성인이 될 때쯤 안정적인 수량의 지방 세포를 가진다</span>는 것이다.',
+    prefix:'The set point theory concept is', target:'that your body has a stable quantity of fat cells by the time you are an adult', suffix:'.',
+    sentence:'The set point theory concept is that your body has a stable quantity of fat cells by the time you are an adult.'
+  },
+  {
+    src:'35번', gram:'the 비교급, the 비교급',
+    hint:'<span class="hl">어린 시절과 십 대 시절에 더 많이 나갈수록, 성인으로서 더 많은 지방 세포를 가질 것이다</span>.',
+    prefix:'', target:'The more weight you carried in your childhood and teenage years the more fat cells you will have as an adult', suffix:'.',
+    sentence:'The more weight you carried in your childhood and teenage years the more fat cells you will have as an adult.'
+  },
+  // 37번
+  {
+    src:'37번', gram:'분사구문 / 관계대명사 that',
+    hint:'플라스틱 산업은 이러한 우려에 빠르게 대응했고, <span class="hl">재활용을 모든 문제의 해결책으로 제시하는 캠페인을 시작했다</span>.',
+    prefix:'The plastics industry was quick to counter these concerns,', target:'launching campaigns that presented recycling as the solution to all our problems', suffix:'.',
+    sentence:'The plastics industry was quick to counter these concerns launching campaigns that presented recycling as the solution to all our problems.'
+  },
+  {
+    src:'37번', gram:'비교급 / with + 명사구',
+    hint:'플라스틱 이전에, 사람들은 <span class="hl">우리가 오늘날 직면한 것보다 훨씬 더 적은 쓰레기 문제를 가지고</span> 더 지속 가능하게 살았다.',
+    prefix:'Before plastic, people lived more sustainably,', target:'with far fewer waste problems than we face today', suffix:'.',
+    sentence:'Before plastic people lived more sustainably with far fewer waste problems than we face today.'
+  },
+  // 41~42번
+  {
+    src:'41~42번', gram:'수동태 / while 부사절',
+    hint:'그것은 전통적으로 가정주부에게 강요되었던 미덕인데, <span class="hl">그 동안 남편들은 집 밖에서 더 신나는 삶을 이끌었다</span>.',
+    prefix:'It is the virtue that has traditionally been urged upon housewives,', target:'while their husbands led more exciting lives outside the home', suffix:'.',
+    sentence:'It is the virtue that has traditionally been urged upon housewives while their husbands led more exciting lives outside the home.'
+  },
+  {
+    src:'41~42번', gram:'in more and more contexts',
+    hint:'점점 더 많은 맥락에서, <span class="hl">인내심은 권력의 한 형태가 된다</span>.',
+    prefix:'In more and more contexts,', target:'patience becomes a form of power', suffix:'.',
+    sentence:'In more and more contexts patience becomes a form of power.'
+  },
+  {
+    src:'41~42번', gram:'instead of + 동명사',
+    hint:'행위 그 자체로부터 만족을 이끌어 내라, <span class="hl">여러분의 모든 성취를 미래로 미루는 대신에</span>.',
+    prefix:'Derive satisfaction from the doing itself,', target:'instead of putting off all your fulfillment to the future', suffix:'.',
+    sentence:'Derive satisfaction from the doing itself instead of putting off all your fulfillment to the future.'
+  },
+];
+
+// ════════════════════════════════
+// 상태
+// ════════════════════════════════
+let mode = '';
+let wordQueue = [];
+let wIdx = 0, wCorrect = 0;
+let wWrong = [];
+
+let sentQueue = [];
+let sIdx = 0, sCorrect = 0;
+let sWrong = [];
+
+let selectedAnswer = [];
+let shuffledWords = [];
+let selectedCount = 20;
+let sentChecked = false;
+
+// ════════════════════════════════
+// 홈
+// ════════════════════════════════
+function selCount(el, n) {
+  document.querySelectorAll('.cnt-btn').forEach(b => b.classList.remove('sel'));
+  el.classList.add('sel');
+  selectedCount = n;
+}
+
+function startMode(m) {
+  mode = m;
+  if (m === 'sentence') {
+    sentQueue = shuffle([...SENTENCES]);
+    sIdx = 0; sCorrect = 0; sWrong = [];
+    showScreen('screen-sent');
+    renderSent();
+  } else {
+    let pool = shuffle([...WORDS]);
+    if (selectedCount > 0) pool = pool.slice(0, selectedCount);
+    wordQueue = pool;
+    wIdx = 0; wCorrect = 0; wWrong = [];
+    showScreen('screen-word');
+    renderWord();
+  }
+}
+
+function goHome() { showScreen('screen-home'); }
+
+// ════════════════════════════════
+// 단어 퀴즈
+// ════════════════════════════════
+function renderWord() {
+  const item = wordQueue[wIdx];
+  const total = wordQueue.length;
+
+  document.getElementById('w-label').textContent = `${wIdx+1} / ${total}`;
+  document.getElementById('w-score').textContent = `맞춤: ${wCorrect}`;
+  document.getElementById('w-prog').style.width = `${(wIdx/total)*100}%`;
+
+  const isEng = mode === 'eng2kor';
+  document.getElementById('w-mode-badge').textContent = isEng ? '🔤 영어→한글' : '📖 한글→영어';
+  document.getElementById('w-src-badge').textContent = '📌 ' + item.src;
+
+  document.getElementById('w-question').textContent = isEng ? item.w : item.m;
+  document.getElementById('w-hint').textContent = isEng ? '위 단어의 뜻을 고르세요' : '위 뜻에 해당하는 영단어를 고르세요';
+
+  const correct = isEng ? item.m : item.w;
+  const pool = WORDS.filter(x => x.w !== item.w);
+  const distractors = [];
+  const seen = new Set([correct]);
+  for (const d of shuffle(pool)) {
+    const val = isEng ? d.m : d.w;
+    if (!seen.has(val)) { seen.add(val); distractors.push(val); if (distractors.length === 3) break; }
+  }
+  const choices = shuffle([{t: correct, ok: true}, ...distractors.map(d => ({t: d, ok: false}))]);
+
+  const grid = document.getElementById('w-choices');
+  grid.innerHTML = '';
+  const nums = ['①','②','③','④'];
+  choices.forEach((c, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'choice';
+    btn.innerHTML = `<span class="ch-num">${nums[i]}</span><span>${c.t}</span>`;
+    btn.onclick = () => checkWord(c.ok, btn, item, correct, choices);
+    grid.appendChild(btn);
+  });
+
+  document.getElementById('w-feedback').className = 'feedback';
+  document.getElementById('w-next').className = 'next-btn';
+}
+
+function checkWord(ok, btn, item, correct, choices) {
+  document.querySelectorAll('.choice').forEach(b => b.disabled = true);
+  document.querySelectorAll('.choice').forEach(b => {
+    const txt = b.querySelector('span:last-child').textContent;
+    const ch = choices.find(c => c.t === txt);
+    if (ch && ch.ok) b.classList.add('correct');
+  });
+  const fb = document.getElementById('w-feedback');
+  if (ok) {
+    wCorrect++;
+    btn.classList.add('correct');
+    fb.className = 'feedback ok show';
+    document.getElementById('w-fb-emoji').textContent = '🎉';
+    document.getElementById('w-fb-text').textContent = '정답!';
+    document.getElementById('w-fb-ans').textContent = `${item.w} = ${item.m} [${item.src}]`;
+  } else {
+    btn.classList.add('wrong');
+    fb.className = 'feedback ng show';
+    document.getElementById('w-fb-emoji').textContent = '❌';
+    document.getElementById('w-fb-text').textContent = '오답!';
+    document.getElementById('w-fb-ans').textContent = `정답: ${correct} [${item.src}]`;
+    wWrong.push(item);
+  }
+  document.getElementById('w-score').textContent = `맞춤: ${wCorrect}`;
+  document.getElementById('w-next').className = 'next-btn show';
+}
+
+function wordNext() {
+  wIdx++;
+  if (wIdx >= wordQueue.length) showWordResult();
+  else renderWord();
+}
+
+function showWordResult() {
+  const total = wordQueue.length;
+  const pct = Math.round((wCorrect/total)*100);
+  showResult(wCorrect, total-wCorrect, total, pct, wWrong, 'word');
+}
+
+// ════════════════════════════════
+// 문장 배열 퀴즈
+// ════════════════════════════════
+function renderSent() {
+  const item = sentQueue[sIdx];
+  const total = sentQueue.length;
+
+  document.getElementById('s-label').textContent = `${sIdx+1} / ${total}`;
+  document.getElementById('s-score').textContent = `맞춤: ${sCorrect}`;
+  document.getElementById('s-prog').style.width = `${(sIdx/total)*100}%`;
+  document.getElementById('s-src-badge').textContent = '📌 ' + item.src;
+  document.getElementById('s-gram-label').textContent = '📌 문법: ' + item.gram;
+  document.getElementById('s-hint').innerHTML = item.hint;
+
+  // 문장 컨텍스트 표시 (주어지는 부분 + 빈칸)
+  const ctx = document.getElementById('s-context');
+  let ctxHTML = '';
+  if (item.prefix) ctxHTML += `<span class="ctx-given">${item.prefix} </span>`;
+  ctxHTML += `<span class="ctx-blank">🟠 영작하세요</span>`;
+  if (item.suffix) ctxHTML += `<span class="ctx-given">${item.suffix}</span>`;
+  ctx.innerHTML = ctxHTML;
+
+  // target 부분만 단어로 분리 & 셔플
+  const words = item.target.split(' ');
+  shuffledWords = shuffle([...words]);
+  selectedAnswer = [];
+  sentChecked = false;
+
+  renderPool();
+  renderZone();
+
+  document.getElementById('s-feedback').className = 'sent-feedback';
+  document.getElementById('s-next').className = 'next-btn';
+}
+
+function renderPool() {
+  const pool = document.getElementById('word-pool');
+  pool.innerHTML = '';
+  shuffledWords.forEach((w, i) => {
+    const chip = document.createElement('div');
+    const isUsed = selectedAnswer.includes(i);
+    chip.className = 'word-chip' + (isUsed ? ' used' : '');
+    chip.textContent = w;
+    chip.dataset.idx = i;
+    if (!isUsed && !sentChecked) {
+      chip.onclick = () => selectWord(i);
+    }
+    pool.appendChild(chip);
+  });
+}
+
+function renderZone() {
+  const zone = document.getElementById('answer-zone');
+  zone.innerHTML = '';
+  if (selectedAnswer.length === 0) {
+    const ph = document.createElement('span');
+    ph.style.cssText = 'color:var(--muted);font-size:12px';
+    ph.textContent = '단어를 순서대로 탭하세요';
+    zone.appendChild(ph);
+    zone.classList.remove('has-words');
+  } else {
+    zone.classList.add('has-words');
+    selectedAnswer.forEach((idx, pos) => {
+      const chip = document.createElement('div');
+      chip.className = 'word-chip in-answer';
+      chip.textContent = shuffledWords[idx];
+      if (!sentChecked) chip.onclick = () => removeWord(pos);
+      zone.appendChild(chip);
+    });
+  }
+}
+
+function selectWord(idx) {
+  if (selectedAnswer.includes(idx)) return;
+  selectedAnswer.push(idx);
+  renderPool();
+  renderZone();
+}
+
+function removeWord(pos) {
+  selectedAnswer.splice(pos, 1);
+  renderPool();
+  renderZone();
+}
+
+function resetAnswer() {
+  if (sentChecked) return;
+  selectedAnswer = [];
+  renderPool();
+  renderZone();
+  document.getElementById('s-feedback').className = 'sent-feedback';
+}
+
+function checkSentence() {
+  if (selectedAnswer.length === 0) return;
+  const item = sentQueue[sIdx];
+  const correct = item.target.split(' ');
+  const myAnswer = selectedAnswer.map(i => shuffledWords[i]);
+
+  const isCorrect = JSON.stringify(myAnswer) === JSON.stringify(correct);
+  const fb = document.getElementById('s-feedback');
+
+  if (isCorrect) {
+    sCorrect++;
+    fb.className = 'sent-feedback ok show';
+    document.getElementById('s-fb-text').textContent = '🎉 정답! 완벽합니다!';
+    document.getElementById('s-correct').textContent = '';
+  } else {
+    fb.className = 'sent-feedback ng show';
+    document.getElementById('s-fb-text').textContent = '❌ 오답! 정답을 확인하세요.';
+    document.getElementById('s-correct').textContent = '✅ ' + item.target;
+    sWrong.push(item);
+  }
+  document.getElementById('s-score').textContent = `맞춤: ${sCorrect}`;
+  document.getElementById('s-next').className = 'next-btn show';
+
+  sentChecked = true;
+  renderPool();
+  renderZone();
+}
+
+function sentNext() {
+  sIdx++;
+  if (sIdx >= sentQueue.length) showSentResult();
+  else renderSent();
+}
+
+function showSentResult() {
+  const total = sentQueue.length;
+  const pct = Math.round((sCorrect/total)*100);
+  showResult(sCorrect, total-sCorrect, total, pct, sWrong, 'sent');
+}
+
+// ════════════════════════════════
+// 결과
+// ════════════════════════════════
+function showResult(correct, wrong, total, pct, wrongList, type) {
+  document.getElementById('r-pct').textContent = pct + '%';
+  document.getElementById('score-ring').style.setProperty('--pct', pct + '%');
+  document.getElementById('r-correct').textContent = correct;
+  document.getElementById('r-wrong').textContent = wrong;
+  document.getElementById('r-total').textContent = total;
+
+  const msgs = [[90,'🏆 완벽!','최상위권 실력!'],[70,'👏 훌륭해요!','조금만 더!'],[50,'💪 노력 중!','오답 복습 필수!'],[0,'📚 더 연습!','오답을 집중 복습하세요']];
+  const [,t,s] = msgs.find(([th]) => pct >= th);
+  document.getElementById('r-title').textContent = t;
+  document.getElementById('r-sub').textContent = s;
+
+  const wList = document.getElementById('r-wrong-list');
+  wList.innerHTML = '';
+  const unique = [...new Map(wrongList.map(x => {
+    const key = type === 'word' ? x.w : x.sentence;
+    return [key, x];
+  })).values()];
+
+  if (unique.length === 0) {
+    document.getElementById('r-wrong-section').innerHTML = '<div style="text-align:center;color:#10b981;padding:16px">✅ 오답 없음! 완벽합니다!</div>';
+  } else {
+    unique.forEach(x => {
+      const el = document.createElement('div');
+      el.className = 'wrong-item';
+      if (type === 'word') {
+        el.innerHTML = `<div class="wrong-word">${x.w}</div><div class="wrong-detail">뜻: ${x.m} | ${x.src}</div>`;
+      } else {
+        el.innerHTML = `<div class="wrong-word">${x.src} · ${x.gram}</div><div class="wrong-detail" style="margin-top:4px;line-height:1.6;font-size:11px">${x.sentence}</div>`;
+      }
+      wList.appendChild(el);
+    });
+  }
+
+  showScreen('screen-result');
+}
+
+function retryWrong() {
+  if (mode === 'sentence') {
+    if (sWrong.length === 0) return;
+    sentQueue = shuffle([...sWrong]);
+    sIdx = 0; sCorrect = 0; sWrong = [];
+    showScreen('screen-sent');
+    renderSent();
+  } else {
+    if (wWrong.length === 0) return;
+    wordQueue = shuffle([...wWrong]);
+    wIdx = 0; wCorrect = 0; wWrong = [];
+    showScreen('screen-word');
+    renderWord();
+  }
+}
+
+// ════════════════════════════════
+// 유틸
+// ════════════════════════════════
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length-1; i > 0; i--) {
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+</script>
+</body>
+</html>
